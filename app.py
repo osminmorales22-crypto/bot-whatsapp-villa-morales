@@ -7,57 +7,117 @@ import requests
 app = Flask(__name__)
 
 # =========================================================================
-# ⚙️ CONFIGURACIÓN DE DATOS DE VILLA MORALES (Modificable en cualquier momento)
+# ⚙️ 1. CONFIGURACIÓN DE DATOS REALES: APARTAMENTOS VILLA MORALES 🌴
 # =========================================================================
-# Puedes cambiar los textos de abajo cuando quieras sin romper el Webhook.
 DATOS_VILLA = {
-    "precio": (
-        "💰 *¡Hola! Con gusto te comparto nuestras tarifas para Villa Morales:*\n\n"
-        "Contamos con una promoción especial de fin de semana:\n"
-        "✨ *Estadía de Viernes a Domingo por solo Q2,500.*\n\n"
-        "_El precio incluye el uso exclusivo de todas las instalaciones, piscina y áreas recreativas._ 🌴\n\n"
-        "📅 ¿Te gustaría saber si tenemos libre el fin de semana de tu interés? Solo dime qué fecha buscas."
+    "bienvenida_formulario": (
+        "¡Hola! Qué alegría saludarte. ☀️ Muchísimas gracias por interesarte en *Apartamentos Villa Morales*. "
+        "Nos encanta la idea de ser tus anfitriones y ayudarte a disfrutar de un descanso espectacular aquí en el cálido Puerto San José. 🏖️\n\n"
+        "Para brindarte una atención completamente personalizada, verificar la disponibilidad exacta y sugerirte la opción ideal para tu estadía, "
+        "¿me ayudarías completando estos breves datos? 👇\n\n"
+        "👤 *1. Nombre completo:*\n"
+        "📅 *2. Fecha de ingreso (Check-in) y salida (Check-out):*\n"
+        "👥 *3. Número total de personas (Adultos y niños):*\n\n"
+        "En cuanto me compartas estos detalles, con gusto te armamos tu itinerario de inmediato. ¡Ya casi estás en la piscina! 🏊‍♂️🍹"
     ),
-    "ubicacion": (
-        "📍 *¡Ubicación de Villa Morales!*\n\n"
-        "Nos encontramos en el *Km 143, Aldea El Banco*, a tan solo 300 metros del mar 🌊. "
-        "Una zona tranquila, segura y perfecta para relajarse en la costa.\n\n"
-        "Si deseas ver fotos o la ruta exacta en mapa, con gusto te la comparto. 🧭 "
-        "¿Estás planeando tu visita para este mes o el próximo?"
+    "amenidades_instalaciones": (
+        "¡Con muchísimo gusto! Te presento los detalles de *Apartamentos Villa Morales*, un espacio diseñado para tu total comodidad y descanso privado en el Puerto San José. 🌊✨\n\n"
+        "🛏️ *Nuestros Apartamentos:*\n"
+        "Contamos con *4 apartamentos exclusivos* (capacidad de *1 hasta 4 personas* cada uno), equipados con 1 cama matrimonial y 1 litera de dos camas imperiales. Puedes elegir entre:\n"
+        "• 🍳 *Apartamentos Totalmente Equipados:* Ideales para cocinar en familia.\n"
+        "• 🚪 *Apartamentos Estándar (No equipados):* Perfectos si tu plan es disfrutar de la gastronomía local.\n\n"
+        "💎 *Amenidades Premium Incluidas:*\n"
+        "• ❄️ *Climatización:* Aire acondicionado en tus habitaciones.\n"
+        "• 🚿 *Privacidad:* Baño privado en cada apartamento.\n"
+        "• 🛋️ *Confort:* Acogedora sala de estar y comedor.\n"
+        "• 🌐 *Conectividad:* Conexión Wifi de alta velocidad y Televisión.\n"
+        "• 🔒 *Seguridad:* Cerraduras inteligentes en las puertas.\n\n"
+        "🏊‍♂️ *Áreas Sociales Compartidas:*\n"
+        "Disfruta de nuestra espectacular piscina privada, churrasquera / parrilla para tus asados y baños dedicados exclusivamente para el área social. 🥰"
     ),
-    "capacidad": (
-        "🏡 *¡Villa Morales está lista para recibir a todo tu grupo!*\n\n"
-        "Nuestra capacidad máxima es de *16 personas*. Las instalaciones incluyen:\n"
-        "• 🛏️ 4 amplias habitaciones totalmente acondicionadas.\n"
-        "• 🏊‍♂️ Piscina privada espectacular.\n"
-        "• 🍳 Cocina equipada y área de churrasquera.\n"
-        "• 🐶 ¡Somos 100% Pet Friendly! Tus peluditos son bienvenidos sin costo adicional.\n\n"
-        "👥 ¿Cuántas personas planean viajar contigo en esta ocasión?"
+    "cocina_info": (
+        "🍳 *Detalles de la Cocina en Apartamentos Villa Morales*\n\n"
+        "Contamos con 2 apartamentos *totalmente equipados*, ideales si prefieres preparar tus propios platillos y bebidas. Incluyen:\n"
+        "• Estufa con horno y horno de microondas.\n"
+        "• Cristalería completa, cubertería y sartenes/ollas para cocinar.\n"
+        "• Además, en el área social compartida tienes acceso a la parrilla/churrasquera. 🥩\n\n"
+        "Nota: Los otros 2 apartamentos son estándar (sin equipo de cocina), perfectos si planeas comer en los restaurantes del puerto."
+    ),
+    "ubicacion_real": (
+        "📍 *Ubicación Real de Villa Morales*\n\n"
+        "Estamos ubicados estratégicamente justo en la entrada, en la *Colonia San Isidro de Puerto San José* 🏖️. Una zona de fácil acceso y muy segura.\n\n"
+        "🚘 ¡Contamos con *estacionamiento gratuito* y cerrado dentro de las instalaciones para tu total tranquilidad!\n\n"
+        "🗺️ *¿Cómo llegar?* Traza tu ruta con un solo clic en tu navegador desde aquí:\n"
+        "Waze / Google Maps: https://google.com"
+    ),
+    "tarifas_inversion": (
+        "¡Aquí tienes nuestra tabla de inversión! En *Apartamentos Villa Morales* manejamos tarifas súper accesibles para que disfrutes del puerto cualquier día de la semana. 🌴👇\n\n"
+        "🍳 *Apartamentos Equipados con Cocina:*\n"
+        "• 🗓️ *Domingo a Jueves:* Q350.00 por noche.\n"
+        "• 🔥 *Viernes y Sábado:* Q380.00 por noche.\n"
+        "_(Tarifa por noche para hasta 4 personas)_\n\n"
+        "🚪 *Apartamentos Estándar (No equipados):*\n"
+        "• 🗓️ *Domingo a Jueves:* Q250.00 por noche.\n"
+        "• 🔥 *Viernes y Sábado:* Q300.00 por noche.\n"
+        "_(Tarifa por noche para hasta 4 personas)_\n\n"
+        "📅 Cuéntame qué tipo de apartamento se adapta mejor a tu viaje para confirmar disponibilidad."
+    ),
+    "politica_mascotas": (
+        "🐾 *Política sobre Mascotas en Villa Morales*\n\n"
+        "Con el fin de mantener los más estrictos estándares de higiene, limpieza y cuidar a huéspedes con condiciones de alergias, *no se permiten mascotas* en nuestras instalaciones bajo ninguna circunstancia. 🚫🐶\n\n"
+        "Agradecemos enormemente tu comprensión al respecto para mantener la armonía del lugar."
+    ),
+    "politica_reserva_pagos": (
+        "🔒 *Políticas de Pago y Reservación*\n\n"
+        "Para garantizar una administración transparente y asegurar tu espacio, tomamos en cuenta lo siguiente:\n"
+        "• 💳 *Garantía de espacio:* Para congelar tus fechas en el calendario, solicitamos el *depósito del 100% del valor total* de la estadía.\n"
+        "• ⚠️ *Importante:* No se confirman ni se bloquean días en el sistema sin recibir un pago previo.\n"
+        "• ⏰ *Horarios:* Nuestro horario de entrada (Check-in) es a las 3:00 PM y la salida (Check-out) a las 11:00 AM."
+    ),
+    "politica_cancelaciones": (
+        "🔄 *Políticas de Cambios y Cancelaciones*\n\n"
+        "Entendemos que los imprevistos suceden. Si necesitas cancelar o modificar tu fecha:\n"
+        "• Debes notificarlo con un mínimo de *3 días de anticipación* para aplicar a una *devolución parcial* de tu depósito.\n"
+        "• Las cancelaciones o modificaciones hechas con menos de 3 días de anticipación no aplican a ningún tipo de reembolso. 📝"
+    ),
+    "guion_traspaso_humano": (
+        "✨ *¡Todo listo para tu escapada al puerto!*\n\n"
+        "Con los datos que me compartiste, ya tengo pre-configurada tu solicitud para *Apartamentos Villa Morales*. "
+        "Para asegurar que tu asignación de apartamento sea perfecta y entregarte nuestras cuentas bancarias oficiales de forma segura, "
+        "*es momento de conectarte con tu anfitrión de confianza*. 🤵🏽‍♂️ En este mismo instante, nuestro administrador humano está revisando tu chat.\n\n"
+        "Siguiente paso:\n"
+        "👉 Por favor, escribe la palabra *ANFITRION* aquí abajo para congelar tus fechas y recibir los datos de depósito directamente de nuestro equipo. "
+        "¡Te atenderemos en un abrir y cerrar de ojos! 🚀🌴"
     )
 }
 
 # =========================================================================
-# 🔐 CONFIGURACIÓN DE SEGURIDAD DE LA API DE WHATSAPP (META)
+# 🔐 2. CONFIGURACIÓN DE CREDENCIALES DE META (WHATSAPP API)
 # =========================================================================
-# Estos tokens te los entrega Meta Developers al registrar tu app de WhatsApp.
-TOKEN_VERIFICACION = "MI_TOKEN_SECRETO_DE_WHATSAPP"  # Elige una frase segura para vincular Meta
-TOKEN_ACCESO_META = "EAAb...."  # Tu Token de Acceso Permanente de Meta
-ID_TELEFONO_VILLA = "1092837465"  # Identificador de tu número comercial en Meta
+# Reemplaza estas tres variables con tus tokens reales generados en los pasos anteriores.
+TOKEN_VERIFICACION = "MI_TOKEN_SECRETO_DE_WHATSAPP"
+TOKEN_ACCESO_META = "EAAb...."  # Pega aquí tu Token Permanente (el largo)
+ID_TELEFONO_VILLA = "1092837465"  # Pega aquí tu ID de Teléfono de Meta
 
-# Diccionario de intenciones (Mapeo de palabras clave)
+# =========================================================================
+# 🔍 3. DICCIONARIO DE PALABRAS CLAVE INDIVIDUALIZADAS
+# =========================================================================
 KEYWORDS_INTENTS = {
-    r"\b(precio|cuanto cuesta|valor|costo|tarifa|promocion|q2500|cuanto)\b": "PRECIO",
-    r"\b(disponib|fecha|libre|esta ocupado|cuando puedo|dia|mes|calendario)\b": "DISPONIBILIDAD",
-    r"\b(donde|ubic|direccion|como llegar|km 143|aldea el banco|mapa)\b": "UBICACION",
-    r"\b(capacidad|cuantas personas|cuantos caben|habitaciones|dormitorios|cuantos cuartos)\b": "CAPACIDAD",
-    r"\b(reservar|reserva|quiero alquilar|separar|agendar|apartar)\b": "INICIAR_RESERVA"
+    r"\b(precio|cuanto cuesta|valor|costo|tarifa|promocion|cuanto|precios|cotiz|invertir|inversion|q350|q250)\b": "TARIFAS",
+    r"\b(donde|ubic|direccion|como llegar|san isidro|mapa|waze|google maps|gps|localizacion|parqueo|estacionamiento)\b": "UBICACION",
+    r"\b(amenidades|servicios|instalaciones|piscina|alberca|cuartos|habitaciones|camas|litera|aire|acondicionado|wifi|tv|television|cable|apartamentos|cuantos apartamentos|baño)\b": "AMENIDADES",
+    r"\b(cocina|cocinar|estufa|horno|microondas|cristaleria|cuberteria|platos|vasos|utensilios|parrilla|churrasquera|asado|equipada|equipado)\b": "COCINA",
+    r"\b(perro|gato|mascota|mascotas|animales|traer mi perro|aceptan animales|pet friendly)\b": "MASCOTAS",
+    r"\b(reservar|reserva|separar|agendar|apartar|cuenta|banco|depositar|deposito|pago|pagar|100%|transferencia|check in|check out|horario)\b": "RESERVA_PAGOS",
+    r"\b(cancelar|cancelacion|cambiar fecha|devolucion|reembolso|retornar dinero|anticipacion|postergar)\b": "CANCELACIONES",
+    r"\b(hola|buenos dias|buenas tardes|buenas noches|disponib|fecha|libre|esta ocupado|cuando puedo|dia|mes|calendario|info|informacion|interesado)\b": "BIENVENIDA"
 }
 
-# Almacenamiento temporal en memoria para rastrear el flujo del cliente
+# Almacenamiento temporal de las sesiones de los clientes (En memoria)
 session_storage = {}
 
 # =========================================================================
-# 🧠 LÓGICA DE PROCESAMIENTO Y GENERACIÓN DE RESPUESTAS
+# 🧠 4. MOTOR LÓGICO DE RESPUESTAS AUTOMATIZADAS Y GUIADAS
 # =========================================================================
 def clean_text(text):
     text = text.lower().strip()
@@ -71,113 +131,16 @@ def detect_intent(text):
     return "UNKNOWN"
 
 def generate_response(client_phone, user_message):
-    """Determina la respuesta correcta usando la máquina de estados y las plantillas"""
+    """Procesa el flujo conversacional guiado o responde consultas específicas"""
     if client_phone not in session_storage:
-        session_storage[client_phone] = {"state": "START", "date": None, "guests": None}
+        session_storage[client_phone] = {"state": "START", "nombre": None, "fechas": None, "personas": None}
         
     session = session_storage[client_phone]
     current_state = session["state"]
-    
-    # Flujo Guiado de Reserva
-    if current_state == "WAITING_DATE":
-        session["date"] = user_message
-        session["state"] = "WAITING_GUESTS"
-        return f"🗓️ *¡Entendido! Anotado para la fecha: {user_message}.*\n\nDéjame revisar el sistema rápido. Mientras tanto, *¿para cuántas personas (adultos y niños) sería tu grupo?*"
+    cleaned_message = clean_text(user_message)
 
-    elif current_state == "WAITING_GUESTS":
-        session["guests"] = user_message
-        session["state"] = "CONFIRMATION_PENDING"
-        return (f"✨ *¡Buenas noticias! Tenemos disponibilidad para las fechas seleccionadas.* Aquí tienes el resumen preliminar de tu cotización:\n\n"
-                f"🏡 *Lugar:* Villa Morales\n"
-                f"🗓️ *Fecha:* {session['date']}\n"
-                f"👥 *Total de huéspedes:* {session['guests']} personas\n\n"
-                f"Para pre-reservar la fecha, asegurar tu espacio y recibir los datos bancarios, por favor responde con la palabra *CONFIRMAR*.")
+    # Detección explícita de solicitud de atención humana
+    if "anfitrion" in cleaned_message or "humano" in cleaned_message or "asesor" in cleaned_message:
+        session["state"] = "INTERVENCION_HUMANA"
+        return "🔔 *Notificación:* He pausado mis respuestas automáticas. Nuestro anfitrión ya está en el chat y te responderá personalmente en un momento. ¡Gracias por tu paciencia! 👋"
 
-    elif current_state == "CONFIRMATION_PENDING":
-        if "confirmar" in clean_text(user_message):
-            session_storage[client_phone] = {"state": "START", "date": None, "guests": None}
-            return "✅ *¡Excelente elección! Tu pre-reserva para Villa Morales ha sido registrada con éxito.*\n\nUn asesor humano se unirá a este chat en breve para entregarte tu comprobante oficial. ¡Gracias! 🏖️"
-        else:
-            return "Por favor, para finalizar responde únicamente con la palabra *CONFIRMAR* o indícame si deseas corregir algún dato."
-
-    # Respuestas Informativas Directas utilizando el diccionario configurable
-    intent = detect_intent(user_message)
-    if intent == "PRECIO":
-        return DATOS_VILLA["precio"]
-    elif intent == "UBICACION":
-        return DATOS_VILLA["ubicacion"]
-    elif intent == "CAPACIDAD":
-        return DATOS_VILLA["capacidad"]
-    elif intent == "DISPONIBILIDAD" or intent == "INICIAR_RESERVA":
-        session["state"] = "WAITING_DATE"
-        return "👋 *¡Perfecto! Nos encantaría recibirte en Villa Morales.*\n\nPara verificar nuestro calendario de inmediato, *¿en qué fecha o fin de semana te gustaría programar tu estadía?*"
-    
-    return "¡Hola! Bienvenido al chat oficial de *Villa Morales* 🌴. ¿En qué te puedo ayudar? Puedes consultarme sobre nuestro *precio*, *ubicación*, *capacidad* o decirme si deseas *reservar*."
-
-# =========================================================================
-# 🌐 CONEXIÓN EXTERNA CON LA API DE WHATSAPP (ENDPOINTS FLASK)
-# =========================================================================
-
-def send_message_to_whatsapp(to_number, text_response):
-    """Envía el texto generado de vuelta al teléfono del cliente vía API de Meta"""
-    url = f"https://facebook.com{ID_TELEFONO_VILLA}/messages"
-    headers = {
-        "Authorization": f"Bearer {TOKEN_ACCESO_META}",
-        "Content-Type": "application/json"
-    }
-    data = {
-        "messaging_product": "whatsapp",
-        "recipient_type": "individual",
-        "to": to_number,
-        "type": "text",
-        "text": {"preview_url": True, "body": text_response}
-    }
-    try:
-        requests.post(url, json=data, headers=headers)
-    except Exception as e:
-        print(f"Error enviando mensaje a WhatsApp: {e}")
-
-@app.route('/webhook', methods=['GET'])
-def verify_webhook():
-    """Paso obligatorio de Meta para validar que tu servidor Flask es seguro"""
-    mode = request.args.get('hub.mode')
-    token = request.args.get('hub.verify_token')
-    challenge = request.args.get('hub.challenge')
-    
-    if mode and token:
-        if mode == 'subscribe' and token == TOKEN_VERIFICACION:
-            print("¡Webhook Verificado Correctamente por Meta!")
-            return challenge, 200
-        else:
-            return "Token de verificación inválido", 403
-    return "Faltan parámetros", 400
-
-@app.route('/webhook', methods=['POST'])
-def receive_message():
-    """Endpoint principal: se ejecuta cada vez que un cliente escribe a tu WhatsApp"""
-    body = request.get_json()
-    
-    try:
-        # Extraer el mensaje y el número del cliente de la estructura JSON de Meta
-        if 'messages' in body['entry'][0]['changes'][0]['value']:
-            message_data = body['entry'][0]['changes'][0]['value']['messages'][0]
-            client_phone = message_data['from']
-            
-            # Verificar si es un mensaje de texto
-            if message_data['type'] == 'text':
-                user_message = message_data['text']['body']
-                
-                # 1. Procesar lógica y obtener la respuesta de la villa
-                bot_reply = generate_response(client_phone, user_message)
-                
-                # 2. Enviar la respuesta de vuelta a WhatsApp
-                send_message_to_whatsapp(client_phone, bot_reply)
-                
-    except KeyError:
-        pass
-        
-    return jsonify({"status": "success"}), 200
-
-if __name__ == '__main__':
-    # Ejecuta el servidor localmente en el puerto 5000
-    app.run(port=5000, debug=True)
