@@ -92,11 +92,11 @@ DATOS_VILLA = {
 }
 
 # =========================================================================
-# 🔐 CONFIGURACIÓN DE CREDENCIALES DE META (WHATSAPP API)
+# 🔐 CONFIGURACIÓN DE CREDENCIALES DE TU INSTANCIA DE Z-API
 # =========================================================================
-TOKEN_VERIFICACION = "MI_TOKEN_SECRETO_DE_WHATSAPP"
-TOKEN_ACCESO_META = "EAAb...."  # Pega aquí tu Token Permanente largo o el temporal de pruebas
-ID_TELEFONO_VILLA = "1261290640408016"  # ID de tu número comercial de la captura anterior
+# Ve a tu panel de Z-API y copia los códigos largos correspondientes en las columnas ID y TOKEN.
+Z_API_ID = "3FB9FDE8CBE8A1D70118..."   # Copia el ID de la tabla de tu pantalla
+Z_API_TOKEN = "252A87FAD09523C83EE5..." # Copia el TOKEN de la tabla de tu pantalla
 
 KEYWORDS_INTENTS = {
     r"\b(precio|cuanto cuesta|valor|costo|tarifa|promocion|cuanto|precios|cotiz|invertir|inversion|q350|q250)\b": "TARIFAS",
@@ -148,4 +148,3 @@ def generate_response(client_phone, user_message):
         return f"👥 ¡Excelente! Fechas registradas: *{user_message}*.\n\nPor último: *¿Para cuántas personas (adultos y niños) sería tu grupo?*"
 
     elif current_state == "ESPERANDO_PERSONAS":
-        session["personas"] = user_message
