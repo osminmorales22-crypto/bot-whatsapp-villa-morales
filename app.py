@@ -96,7 +96,7 @@ DATOS_VILLA = {
 # =========================================================================
 # Reemplaza estas tres variables con tus tokens reales generados en los pasos anteriores.
 TOKEN_VERIFICACION = "MI_TOKEN_SECRETO_DE_WHATSAPP"
-TOKEN_ACCESO_META = "EAAb...."  # Pega aquí tu Token Permanente (el largo)
+TOKEN_ACCESO_META = "EAAVhH71DUdgBSY1bgZAMwmpWiL6gY5csw9v9i4rxgNgW4Rj2StuSxQhgHExIQChdSnk3B1QcjXpQ9hnZBm6AmWbHsIVocVcpHRygC15hELN4OibJGqpZAGjzkCnwVJ3tomYZCQ8dUMxZAiL7Cr79NqhdfHrwIK7wyhfnaj9Jz5GMljBoXTOJQeS10RXyk17L4beKiKJ5ZAkZBjkdPKBQgnwszdZAREX1FTjckcVadgZB4Dv9bIaRdXKLOxUjeZCGna0pqZBjYhnwdkVbVPcNjASsAZDZD"  # Pega aquí tu Token Permanente (el largo)
 ID_TELEFONO_VILLA = "1092837465"  # Pega aquí tu ID de Teléfono de Meta
 
 # =========================================================================
