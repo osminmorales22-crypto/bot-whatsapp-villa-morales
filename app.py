@@ -7,7 +7,7 @@ import requests
 app = Flask(__name__)
 
 # =========================================================================
-# ⚙️ DATOS CONFIGURADOS COMPLETOS: APARTAMENTOS VILLA MORALES 🌴
+# ⚙️ CONFIGURACIÓN DE DATOS INDUSTRIALES: APARTAMENTOS VILLA MORALES 🌴
 # =========================================================================
 DATOS_VILLA = {
     "BIENVENIDA": (
@@ -91,9 +91,6 @@ DATOS_VILLA = {
     )
 }
 
-# =========================================================================
-# 🔐 PASARELA COMERCIAL: CREDENCIALES FIJAS DE Z-API
-# =========================================================================
 Z_API_ID = "3FB9FDE8CBE8A1D70118"
 Z_API_TOKEN = "252A87FAD09523C83EE5"
 
@@ -122,7 +119,6 @@ def detect_intent(text):
     return "UNKNOWN"
 
 def generate_response(client_phone, user_message):
-    """Procesador lineal y seguro: Cero anidaciones complejas de código"""
     if client_phone not in session_storage:
         session_storage[client_phone] = {"state": "START", "nombre": None, "fechas": None, "personas": None}
         
@@ -130,7 +126,6 @@ def generate_response(client_phone, user_message):
     current_state = session["state"]
     msg = clean_text(user_message)
 
-    # 1. Filtros globales obligatorios
     if "anfitrion" in msg or "humano" in msg or "asesor" in msg:
         session["state"] = "INTERVENCION_HUMANA"
         return "🔔 *Notificación:* He pausado mis respuestas automáticas. Nuestro anfitrión ya está en el chat y te responderá personalmente en un momento. ¡Gracias por tu paciencia! 👋"
@@ -138,7 +133,6 @@ def generate_response(client_phone, user_message):
     if current_state == "INTERVENCION_HUMANA":
         return None
 
-    # 2. Máquina de Estados Plana (Formulario Guiado Secuencial)
     if current_state == "ESPERANDO_NOMBRE":
         session["nombre"] = user_message
         session["state"] = "ESPERANDO_FECHAS"
@@ -153,3 +147,11 @@ def generate_response(client_phone, user_message):
         session["personas"] = user_message
         session["state"] = "LISTO_PARA_TRASPASO"
         return DATOS_VILLA["guion_traspaso_humano"]
+
+    if current_state == "LISTO_PARA_TRASPASO":
+        return "Por favor, escribe la palabra *ANFITRION* para que nuestro equipo humano tome tu caso y te envíe las cuentas de depósito de inmediato. 🏖️"
+
+    intent = detect_intent(user_message)
+    if intent in DATOS_VILLA:
+        if intent == "BIENVENIDA":
+            session["state"] = "ESPERANDO_NOMBRE"
