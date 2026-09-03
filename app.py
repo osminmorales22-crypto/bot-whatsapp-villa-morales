@@ -7,7 +7,7 @@ import requests
 app = Flask(__name__)
 
 # =========================================================================
-# ⚙️ CONFIGURACIÓN DE DATOS INDUSTRIALES: APARTAMENTOS VILLA MORALES 🌴
+# ⚙️ CONFIGURACIÓN DE DATOS REALES: APARTAMENTOS VILLA MORALES 🌴
 # =========================================================================
 DATOS_VILLA = {
     "BIENVENIDA": (
@@ -91,6 +91,9 @@ DATOS_VILLA = {
     )
 }
 
+# =========================================================================
+# 🔐 PASARELA DE COMUNICACIÓN (Z-API CREDENTIALS)
+# =========================================================================
 Z_API_ID = "3FB9FDE8CBE8A1D70118"
 Z_API_TOKEN = "252A87FAD09523C83EE5"
 
@@ -149,9 +152,3 @@ def generate_response(client_phone, user_message):
         return DATOS_VILLA["guion_traspaso_humano"]
 
     if current_state == "LISTO_PARA_TRASPASO":
-        return "Por favor, escribe la palabra *ANFITRION* para que nuestro equipo humano tome tu caso y te envíe las cuentas de depósito de inmediato. 🏖️"
-
-    intent = detect_intent(user_message)
-    if intent in DATOS_VILLA:
-        if intent == "BIENVENIDA":
-            session["state"] = "ESPERANDO_NOMBRE"
