@@ -6,9 +6,6 @@ import requests
 
 app = Flask(__name__)
 
-# =========================================================================
-# ⚙️ CONFIGURACIÓN DE DATOS REALES: APARTAMENTOS VILLA MORALES 🌴
-# =========================================================================
 DATOS_VILLA = {
     "bienvenida_formulario": (
         "¡Hola! Qué alegría saludarte. ☀️ Muchísimas gracias por interesarte en *Apartamentos Villa Morales*. "
@@ -21,7 +18,7 @@ DATOS_VILLA = {
         "En cuanto me compartas estos detalles, con gusto te armamos tu itinerario de inmediato. ¡Ya casi estás en la piscina! 🏊‍♂️🍹"
     ),
     "amenidades_instalaciones": (
-        "¡Con muchísimo gusto! Te presento los detalles de *Apartamentos Villa Morales*, un espacio diseñado para tu total comodidad and descanso privado en el Puerto San José. 🌊✨\n\n"
+        "¡Con muchísimo gusto! Te presento los detalles de *Apartamentos Villa Morales*, un espacio diseñado para tu total comodidad y descanso privado en el Puerto San José. 🌊✨\n\n"
         "🛏️ *Nuestros Apartamentos:*\n"
         "Contamos con *4 apartamentos exclusivos* (capacidad de *1 hasta 4 personas* cada uno), equipados con 1 cama matrimonial y 1 litera de dos camas imperiales. Puedes elegir entre:\n"
         "• 🍳 *Apartamentos Totalmente Equipados:* Ideales para cocinar en familia.\n"
@@ -91,9 +88,6 @@ DATOS_VILLA = {
     )
 }
 
-# =========================================================================
-# 🔐 CONFIGURACIÓN DE CREDENCIALES DE TU INSTANCIA DE Z-API
-# =========================================================================
 Z_API_ID = "3FB9FDE8CBE8A1D70118"
 Z_API_TOKEN = "252A87FAD09523C83EE5"
 
@@ -127,9 +121,9 @@ def generate_response(client_phone, user_message):
         
     session = session_storage[client_phone]
     current_state = session["state"]
-    cleaned_message = clean_text(user_message)
+    msg = clean_text(user_message)
 
-    if "anfitrion" in cleaned_message or "humano" in cleaned_message or "asesor" in cleaned_message:
+    if "anfitrion" in msg or "humano" in msg or "asesor" in msg:
         session["state"] = "INTERVENCION_HUMANA"
         return "🔔 *Notificación:* He pausado mis respuestas automáticas. Nuestro anfitrión ya está en el chat y te responderá personalmente en un momento. ¡Gracias por tu paciencia! 👋"
 
@@ -141,14 +135,24 @@ def generate_response(client_phone, user_message):
         session["state"] = "ESPERANDO_FECHAS"
         return f"🗓️ Gracias *{user_message}*. Anotado en tu ficha.\n\nComo segundo paso: *¿Cuáles serían tus fechas de ingreso (Check-in) y de salida (Check-out)?*"
 
-    elif current_state == "ESPERANDO_FECHAS":
+    if current_state == "ESPERANDO_FECHAS":
         session["fechas"] = user_message
         session["state"] = "ESPERANDO_PERSONAS"
         return f"👥 ¡Excelente! Fechas registradas: *{user_message}*.\n\nPor último: *¿Para cuántas personas (adultos y niños) sería tu grupo?*"
 
-    elif current_state == "ESPERANDO_PERSONAS":
+    if current_state == "ESPERANDO_PERSONAS":
         session["personas"] = user_message
         session["state"] = "LISTO_PARA_TRASPASO"
         return DATOS_VILLA["guion_traspaso_humano"]
 
-    elif current_state == "LISTO_PARA_TRASPASO":
+    if current_state == "LISTO_PARA_TRASPASO":
+        return "Por favor, escribe la palabra *ANFITRION* para que nuestro equipo humano tome tu caso y te envíe las cuentas de depósito de inmediato. 🏖️"
+
+    intent = detect_intent(user_message)
+    if intent == "TARIFAS":
+        return DATOS_VILLA["tarifas_inversion"]
+    if intent == "UBICACION":
+        return DATOS_VILLA["ubicacion_real"]
+    if intent == "AMENIDADES":
+        return DATOS_VILLA["amenidades_instalaciones"]
+    if intent == "COCINA":
