@@ -6,8 +6,11 @@ import requests
 
 app = Flask(__name__)
 
+# =========================================================================
+# ⚙️ DATOS CONFIGURADOS COMPLETOS: APARTAMENTOS VILLA MORALES 🌴
+# =========================================================================
 DATOS_VILLA = {
-    "bienvenida_formulario": (
+    "BIENVENIDA": (
         "¡Hola! Qué alegría saludarte. ☀️ Muchísimas gracias por interesarte en *Apartamentos Villa Morales*. "
         "Nos encanta la idea de ser tus anfitriones y ayudarte a disfrutar de un descanso espectacular aquí en el cálido Puerto San José. 🏖️\n\n"
         "Para brindarte una atención completamente personalizada, verificar la disponibilidad exacta y sugerirte la opción ideal para tu estadía, "
@@ -17,7 +20,7 @@ DATOS_VILLA = {
         "👥 *3. Número total de personas (Adultos y niños):*\n\n"
         "En cuanto me compartas estos detalles, con gusto te armamos tu itinerario de inmediato. ¡Ya casi estás en la piscina! 🏊‍♂️🍹"
     ),
-    "amenidades_instalaciones": (
+    "AMENIDADES": (
         "¡Con muchísimo gusto! Te presento los detalles de *Apartamentos Villa Morales*, un espacio diseñado para tu total comodidad y descanso privado en el Puerto San José. 🌊✨\n\n"
         "🛏️ *Nuestros Apartamentos:*\n"
         "Contamos con *4 apartamentos exclusivos* (capacidad de *1 hasta 4 personas* cada uno), equipados con 1 cama matrimonial y 1 litera de dos camas imperiales. Puedes elegir entre:\n"
@@ -32,7 +35,7 @@ DATOS_VILLA = {
         "🏊‍♂️ *Áreas Sociales Compartidas:*\n"
         "Disfruta de nuestra espectacular piscina privada, churrasquera / parrilla para tus asados y baños dedicados exclusivamente para el área social. 🥰"
     ),
-    "cocina_info": (
+    "COCINA": (
         "🍳 *Detalles de la Cocina en Apartamentos Villa Morales*\n\n"
         "Contamos con 2 apartamentos *totalmente equipados*, ideales si prefieres preparar tus propios platillos y bebidas. Incluyen:\n"
         "• Estufa con horno y horno de microondas.\n"
@@ -40,14 +43,14 @@ DATOS_VILLA = {
         "• Además, en el área social compartida tienes acceso a la parrilla/churrasquera. 🥩\n\n"
         "Nota: Los otros 2 apartamentos son estándar (sin equipo de cocina), perfectos si planeas comer en los restaurantes del puerto."
     ),
-    "ubicacion_real": (
+    "UBICACION": (
         "📍 *Ubicación Real de Villa Morales*\n\n"
         "Estamos ubicados estratégicamente justo en la entrada, en la *Colonia San Isidro de Puerto San José* 🏖️. Una zona de fácil acceso y muy segura.\n\n"
         "🚘 ¡Contamos con *estacionamiento gratuito* y cerrado dentro de las instalaciones para tu total tranquilidad!\n\n"
         "🗺️ *¿Cómo llegar?* Traza tu ruta con un solo clic en tu navegador desde aquí:\n"
         "Waze / Google Maps: https://google.com"
     ),
-    "tarifas_inversion": (
+    "TARIFAS": (
         "¡Aquí tienes nuestra tabla de inversión! En *Apartamentos Villa Morales* manejamos tarifas súper accesibles para que disfrutes del puerto cualquier día de la semana. 🌴👇\n\n"
         "🍳 *Apartamentos Equipados con Cocina:*\n"
         "• 🗓️ *Domingo a Jueves:* Q350.00 por noche.\n"
@@ -59,26 +62,26 @@ DATOS_VILLA = {
         "_(Tarifa por noche para hasta 4 personas)_\n\n"
         "📅 Cuéntame qué tipo de apartamento se adapta mejor a tu viaje para confirmar disponibilidad."
     ),
-    "politica_mascotas": (
+    "MASCOTAS": (
         "🐾 *Política sobre Mascotas en Villa Morales*\n\n"
         "Con el fin de mantener los más estrictos estándares de higiene, limpieza y cuidar a huéspedes con condiciones de alergias, *no se permiten mascotas* en nuestras instalaciones bajo ninguna circunstancia. 🚫🐶\n\n"
         "Agradecemos enormemente tu comprensión al respecto para mantener la armonía del lugar."
     ),
-    "politica_reserva_pagos": (
+    "RESERVA_PAGOS": (
         "🔒 *Políticas de Pago y Reservación*\n\n"
         "Para garantizar una administración transparente y asegurar tu espacio, tomamos en cuenta lo siguiente:\n"
         "• 💳 *Garantía de espacio:* Para congelar tus fechas en el calendario, solicitamos el *depósito del 100% del valor total* de la estadía.\n"
-        "• ⚠️ *Importante:* No se confirman ni se bloquean días en el sistema sin recibir un pago previo.\n"
+        "• ⚠️ *Importantísimo:* No se confirman ni se bloquean días en el sistema sin recibir un pago previo.\n"
         "• ⏰ *Horarios:* Nuestro horario de entrada (Check-in) es a las 3:00 PM y la salida (Check-out) a las 11:00 AM."
     ),
-    "politica_cancelaciones": (
+    "CANCELACIONES": (
         "🔄 *Políticas de Cambios y Cancelaciones*\n\n"
         "Entendemos que los imprevistos suceden. Si necesitas cancelar o modificar tu fecha:\n"
         "• Debes notificarlo con un mínimo de *3 días de anticipación* para aplicar a una *devolución parcial* de tu depósito.\n"
         "• Las cancelaciones o modificaciones hechas con menos de 3 días de anticipación no aplican a ningún tipo de reembolso. 📝"
     ),
     "guion_traspaso_humano": (
-        "✨ *¡Todo listo para tu escapada al puerto!*\n\n"
+        "✨ *¡Todo listo para tu escapada al puerto!* \n\n"
         "Con los datos que me compartiste, ya tengo pre-configurada tu solicitud para *Apartamentos Villa Morales*. "
         "Para asegurar que tu asignación de apartamento sea perfecta y entregarte nuestras cuentas bancarias oficiales de forma segura, "
         "*es momento de conectarte con tu anfitrión de confianza*. 🤵🏽‍♂️ En este mismo instante, nuestro administrador humano está revisando tu chat.\n\n"
@@ -88,6 +91,9 @@ DATOS_VILLA = {
     )
 }
 
+# =========================================================================
+# 🔐 PASARELA COMERCIAL: CREDENCIALES FIJAS DE Z-API
+# =========================================================================
 Z_API_ID = "3FB9FDE8CBE8A1D70118"
 Z_API_TOKEN = "252A87FAD09523C83EE5"
 
@@ -116,6 +122,7 @@ def detect_intent(text):
     return "UNKNOWN"
 
 def generate_response(client_phone, user_message):
+    """Procesador lineal y seguro: Cero anidaciones complejas de código"""
     if client_phone not in session_storage:
         session_storage[client_phone] = {"state": "START", "nombre": None, "fechas": None, "personas": None}
         
@@ -123,6 +130,7 @@ def generate_response(client_phone, user_message):
     current_state = session["state"]
     msg = clean_text(user_message)
 
+    # 1. Filtros globales obligatorios
     if "anfitrion" in msg or "humano" in msg or "asesor" in msg:
         session["state"] = "INTERVENCION_HUMANA"
         return "🔔 *Notificación:* He pausado mis respuestas automáticas. Nuestro anfitrión ya está en el chat y te responderá personalmente en un momento. ¡Gracias por tu paciencia! 👋"
@@ -130,6 +138,7 @@ def generate_response(client_phone, user_message):
     if current_state == "INTERVENCION_HUMANA":
         return None
 
+    # 2. Máquina de Estados Plana (Formulario Guiado Secuencial)
     if current_state == "ESPERANDO_NOMBRE":
         session["nombre"] = user_message
         session["state"] = "ESPERANDO_FECHAS"
@@ -144,15 +153,3 @@ def generate_response(client_phone, user_message):
         session["personas"] = user_message
         session["state"] = "LISTO_PARA_TRASPASO"
         return DATOS_VILLA["guion_traspaso_humano"]
-
-    if current_state == "LISTO_PARA_TRASPASO":
-        return "Por favor, escribe la palabra *ANFITRION* para que nuestro equipo humano tome tu caso y te envíe las cuentas de depósito de inmediato. 🏖️"
-
-    intent = detect_intent(user_message)
-    if intent == "TARIFAS":
-        return DATOS_VILLA["tarifas_inversion"]
-    if intent == "UBICACION":
-        return DATOS_VILLA["ubicacion_real"]
-    if intent == "AMENIDADES":
-        return DATOS_VILLA["amenidades_instalaciones"]
-    if intent == "COCINA":
