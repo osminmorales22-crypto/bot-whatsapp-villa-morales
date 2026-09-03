@@ -21,7 +21,7 @@ DATOS_VILLA = {
         "En cuanto me compartas estos detalles, con gusto te armamos tu itinerario de inmediato. ¡Ya casi estás en la piscina! 🏊‍♂️🍹"
     ),
     "amenidades_instalaciones": (
-        "¡Con muchísimo gusto! Te presento los detalles de *Apartamentos Villa Morales*, un espacio diseñado para tu total comodidad y descanso privado en el Puerto San José. 🌊✨\n\n"
+        "¡Con muchísimo gusto! Te presento los detalles de *Apartamentos Villa Morales*, un espacio diseñado para tu total comodidad and descanso privado en el Puerto San José. 🌊✨\n\n"
         "🛏️ *Nuestros Apartamentos:*\n"
         "Contamos con *4 apartamentos exclusivos* (capacidad de *1 hasta 4 personas* cada uno), equipados con 1 cama matrimonial y 1 litera de dos camas imperiales. Puedes elegir entre:\n"
         "• 🍳 *Apartamentos Totalmente Equipados:* Ideales para cocinar en familia.\n"
@@ -94,9 +94,8 @@ DATOS_VILLA = {
 # =========================================================================
 # 🔐 CONFIGURACIÓN DE CREDENCIALES DE TU INSTANCIA DE Z-API
 # =========================================================================
-# Ve a tu panel de Z-API y copia los códigos largos correspondientes en las columnas ID y TOKEN.
-Z_API_ID = "3FB9FDE8CBE8A1D70118..."   # Copia el ID de la tabla de tu pantalla
-Z_API_TOKEN = "252A87FAD09523C83EE5..." # Copia el TOKEN de la tabla de tu pantalla
+Z_API_ID = "3FB9FDE8CBE8A1D70118"
+Z_API_TOKEN = "252A87FAD09523C83EE5"
 
 KEYWORDS_INTENTS = {
     r"\b(precio|cuanto cuesta|valor|costo|tarifa|promocion|cuanto|precios|cotiz|invertir|inversion|q350|q250)\b": "TARIFAS",
@@ -148,3 +147,8 @@ def generate_response(client_phone, user_message):
         return f"👥 ¡Excelente! Fechas registradas: *{user_message}*.\n\nPor último: *¿Para cuántas personas (adultos y niños) sería tu grupo?*"
 
     elif current_state == "ESPERANDO_PERSONAS":
+        session["personas"] = user_message
+        session["state"] = "LISTO_PARA_TRASPASO"
+        return DATOS_VILLA["guion_traspaso_humano"]
+
+    elif current_state == "LISTO_PARA_TRASPASO":
